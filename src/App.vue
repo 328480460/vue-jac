@@ -1,23 +1,37 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view></router-view>
+    <Vheader></Vheader>
+    <Vmenu></Vmenu>
+    <Tab></Tab>
+    <!-- 路由出口 -->
+    <div class="router">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
 <script>
+import Vheader from './components/header/header.vue'
+import Vmenu from './components/menu/menu.vue'
+import Tab from './components/tabs/tab.vue'
+
 export default {
-  name: 'app'
+  name: 'app',
+  components: {
+    Vheader,
+    Vmenu,
+    Tab
+  }
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="less" scoped>
+  .router {
+    position: absolute;
+    left: 195px;
+    top: 120px;
+    right: 0;
+    bottom: 0;
+    overflow: scroll;
+  }
 </style>
