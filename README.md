@@ -1,7 +1,7 @@
 # vue-jac
 
 > A Vue.js project
-
+基于vue-cli vuex vue-router axios element-ui的一个简单后台模板，使用express来模拟数据，axios做请求，vue-router做前端路由实现，vuex做状态管理，目前实现了部分功能，有时间会继续完成
 ## Build Setup
 
 ``` bash
