@@ -2,7 +2,7 @@ import router from '../router/index.js';
 
 export default {
 	addTab(state,obj) {
-		console.log(obj);
+		// console.log(obj);
 		if(state.tabList.indexOf(obj) === -1) {
 			state.tabList.push(obj);
 		} 
@@ -19,7 +19,10 @@ export default {
 		//重新定义路由
 		router.push({ path: 'Readme'})
 	},
-	turn(state,id) {
-		state.currentId = id;
+	turn(state,params) {
+		// console.log(params);
+		state.currentId = params.name;
+		//重新定义路由
+		router.push({ path: params.label});
 	}
 }

@@ -1,11 +1,6 @@
 <template>
     <div>
-        <div class="crumbs">
-            <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-date"></i> 表单</el-breadcrumb-item>
-                <el-breadcrumb-item>markdown</el-breadcrumb-item>
-            </el-breadcrumb>
-        </div>
+        
         <div class="plugins-tips">
             Vue-SimpleMDE：Vue.js的Markdown Editor组件。
             访问地址：<a href="https://github.com/F-loat/vue-simplemde" target="_blank">Vue-SimpleMDE</a>
@@ -20,7 +15,7 @@
 </template>
 
 <script>
-    import { markdownEditor } from 'vue-simplemde';
+    // import { markdownEditor } from 'vue-simplemde';
     export default {
         data: function(){
             return {

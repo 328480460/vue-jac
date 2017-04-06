@@ -1,22 +1,15 @@
 <template>
     <div>
-        <div class="crumbs">
-            <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-setting"></i> 自述</el-breadcrumb-item>
-            </el-breadcrumb>
-        </div>
         <div class="ms-doc">
             <h3>README.md</h3>
             <article>
-                <h1>manage-system</h1>
-                <p>基于Vue.js 2.x系列 + Element UI 的后台管理系统解决方案</p>
-                <h2>前言</h2>
-                <p>之前在公司用了Vue + Element组件库做了个后台管理系统，基本很多组件可以直接引用组件库的，但是也有一些需求无法满足。像图片裁剪上传、富文本编辑器、图表等这些在后台管理系统中很常见的功能，就需要引用其他的组件才能完成。从寻找组件，到使用组件的过程中，遇到了很多问题，也积累了宝贵的经验。所以我就把开发这个后台管理系统的经验，总结成这个后台管理系统解决方案。</p>
-                <p>该方案作为一套多功能的后台框架模板，适用于绝大部分的后台管理系统（Web Management System）开发。基于vue.js,使用vue-cli脚手架快速生成项目目录，引用Element UI组件库，方便开发快速简洁好看的组件。分离颜色样式，支持手动切换主题色，而且很方便使用自定义主题色。</p>
+                <h1>jac-manage-system</h1>
+                <h2>描述</h2>
+                <p>前段时间公司开发了一个后台债券管理项目，由于对接的是java，后台小伙伴要求将html，改为jsp进行开发，主要框架为jquery和layui，还是采用传统的单页来展示不同的页面，坑的要死。因此，想用vue来重构下，目标是一个单页spa应用，顺便熟悉下vue全家桶。本次重写用到了vue + vue-cli + vue-router + vuex + axios和饿了么提供的ui库element-ui，express作为中间层来模拟数据，返回data</p>
+                <p>写的东西不多，目前完成了第一步，将menu和tab和router-view联系了起来开发过程中，主要用vuex来存储中间状态，tab标签页的增加和删除，路由的重新定向等，分页和table数据的联动等，有时间会继续完成，这里还厚颜无耻的用了网上某个小伙伴的单页，实在是懒得写样式了</p>
                 <h2>功能</h2>
                 <el-checkbox disabled checked>Element UI</el-checkbox>
                 <br>
-                <el-checkbox disabled checked>登录/注销</el-checkbox>
                 <br>
                 <el-checkbox disabled checked>表格</el-checkbox>
                 <br>
@@ -30,7 +23,6 @@
                 <br>
                 <el-checkbox disabled checked>图片拖拽/裁剪上传</el-checkbox>
                 <br>
-                <el-checkbox disabled checked>支持切换主题色</el-checkbox>
                 <br>
             </article>
         </div>
@@ -40,9 +32,7 @@
 
 <script>
     export default {
-        data: function(){
-            return {}
-        }
+
     }
 </script>
 

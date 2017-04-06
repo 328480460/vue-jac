@@ -12,17 +12,21 @@
 </template>
 
 <script>
-import data from '../../../data.json'
 
 export default {
   name: 'menu',
   created(){
-    this.menuData = data.menus;
-    this.initTab();
+    this.$ajax.get('api/menus').then((res) => {
+      //更新dom队列
+      this.$nextTick(() => {
+        this.menuData = res.data.menus;
+        this.initTab();
+      });
+    })
   },
   data() {
     return {
-      
+      menuData: []
     }
   },
   computed: {

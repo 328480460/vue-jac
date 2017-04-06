@@ -1,10 +1,10 @@
 <template>
-  <div class="tab" name="tab">
+  <div class="tab" name="tab" >
     <el-tabs type="border-card" @tab-remove="removeTab" @tab-click="turn"  v-model="editableTabsValue" >
-      <el-tab-pane v-for="(item, index) in editableTabs" :key='index' :name="item.name" :closable="item.closable">
+      <el-tab-pane v-for="(item, index) in editableTabs" :key='index' :label="item.realName" :name="item.name" :closable="item.closable">
         <span slot="label">
           <i :class="item.icon"></i>
-          {{item.title}}{{item.name}}
+          {{item.title}}
         </span>
       </el-tab-pane>
     </el-tabs>
@@ -43,13 +43,14 @@ export default {
         _obj.title = item.text;
         _obj.icon = item.iconClass;
         _obj.name = item.index.toString();
+        _obj.realName = item.name;
         _tabArr.push(_obj);
 
       })
       return _tabArr;
     },
     turn(tab, event) {
-      this.$store.commit('turn',tab.name);
+      this.$store.commit('turn',tab);
     },
     removeTab(targetName) {
       this.$store.commit('delTab',targetName);
@@ -61,10 +62,11 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less">
   .tab {
-    width: 100%;
     position: absolute;
     top: 65px;
     left: 185px;
+    right: 0;
+    overflow:auto;
     .el-tabs {
       padding: 0;
       .el-tabs__content {

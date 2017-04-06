@@ -4,6 +4,7 @@ import BaseForm from '@/components/page/BaseForm'
 import BaseCharts from '@/components/page/BaseCharts'
 import BaseTable from '@/components/page/BaseTable'
 import Readme from '@/components/page/Readme'
+import MixCharts from '@/components/page/MixCharts'
 
 Vue.use(Router)
 
@@ -30,6 +31,10 @@ export default new Router({
 	      path: '/Readme',
 	      name: 'Readme',
 	      component: Readme
+	    }, {
+	      path: '/MixCharts',
+	      name: 'MixCharts',
+	      component: MixCharts
 	    }
   	]
 })

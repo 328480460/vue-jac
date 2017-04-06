@@ -25,6 +25,27 @@ var proxyTable = config.dev.proxyTable
 var app = express()
 var compiler = webpack(webpackConfig)
 
+var data = require("../data.json");
+var tableData = data.tableData;
+var menus = data.menus;
+
+var apiRoutes = express.Router();
+
+apiRoutes.get('/menus',(req, res) => {
+  res.json({
+    menus:menus
+  })
+})
+
+apiRoutes.get('/tableData',(req, res) => {
+  res.json({
+    tableData:tableData
+  })
+})
+
+app.use('/api',apiRoutes)
+
+
 var devMiddleware = require('webpack-dev-middleware')(compiler, {
   publicPath: webpackConfig.output.publicPath,
   quiet: true
