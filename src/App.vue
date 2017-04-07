@@ -15,6 +15,7 @@ import Vheader from './components/header/header.vue'
 import Vmenu from './components/menu/menu.vue'
 import Tab from './components/tabs/tab.vue'
 
+
 export default {
   name: 'app',
   components: {

@@ -7,7 +7,9 @@ import store from './vuex/store.js'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
 import axios from 'axios'
+import echarts  from 'echarts'
 
+Vue.prototype.$echarts = echarts;
 Vue.prototype.$ajax = axios;
 
 Vue.use(ElementUI)

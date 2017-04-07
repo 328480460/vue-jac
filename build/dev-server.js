@@ -24,12 +24,28 @@ var proxyTable = config.dev.proxyTable
 
 var app = express()
 var compiler = webpack(webpackConfig)
-
+// 引入data.json
 var data = require("../data.json");
 var tableData = data.tableData;
 var menus = data.menus;
 
+// 引入百度地图相关的Echars的busLine.json
+var busLine = require("../busLine.json");
+// 引入Echars相关的map china.json
+var chinaMap = require("../chinaMap.json");
+
 var apiRoutes = express.Router();
+
+apiRoutes.get('/busLine',(req, res) => {
+  res.json({
+    busLine:busLine
+  })
+})
+apiRoutes.get('/chinaMap',(req, res) => {
+  res.json({
+    chinaMap:chinaMap
+  })
+})
 
 apiRoutes.get('/menus',(req, res) => {
   res.json({

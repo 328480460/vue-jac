@@ -1,149 +1,223 @@
 <template>
     <div>
-        
         <div class="plugins-tips">
-            vue-echarts-v3：基于vue2和eCharts.js3的图表组件。
-            访问地址：<a href="https://github.com/xlsdg/vue-echarts-v3" target="_blank">vue-echarts-v3</a>
+            E3
         </div>
-        <div class="echarts">
-            <IEcharts :option="line" ></IEcharts>
-        </div>
-        <div class="echarts">
-            <IEcharts :option="bar" ></IEcharts>
-        </div>
-        <div class="echarts">
-            <IEcharts :option="pie" ></IEcharts>
-        </div>
-        <div class="echarts">
-            <IEcharts :option="pie_radius" ></IEcharts>
+        <div id="main">
+            
         </div>
     </div>
 </template>
 
 <script>
-    import IEcharts from 'vue-echarts-v3';
+
+    import bmap from'echarts/extension/bmap/bmap';
     export default {
-        components: {
-            IEcharts
-        },
-        data: () => ({
-            line: {
-                color:["#20a0ff","#13CE66","#F7BA2A","#FF4949"],
-                title: {
-                    text: '曲线图'
-                },
-                xAxis: {
-                    data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
-                },
-                yAxis:{},
-                series: [
-                    {
-                        name: "销量",
-                        type: "line",
-                        data: [5, 20, 36, 10, 10, 20]
+        mounted() {
+            var vm = this;
+            
+            var myChart = vm.$echarts.init(document.getElementById('main'));
+
+            vm.$ajax.get('api/busLine').then(function(res) {
+                var data = res.data.busLine;
+                var hStep = 300 / (data.length - 1);
+                var busLines = [].concat.apply([], data.map(function (busLine, idx) {
+                    var prevPt;
+                    var points = [];
+                    for (var i = 0; i < busLine.length; i += 2) {
+                        var pt = [busLine[i], busLine[i + 1]];
+                        if (i > 0) {
+                            pt = [
+                                prevPt[0] + pt[0],
+                                prevPt[1] + pt[1]
+                            ];
+                        }
+                        prevPt = pt;
+
+                        points.push([pt[0] / 1e4, pt[1] / 1e4]);
                     }
-                ]
-            },
-            bar: {
-                color:["#20a0ff","#13CE66","#F7BA2A","#FF4949"],
-                title: {
-                    text: '柱状图'
-                },
-                xAxis: {
-                    data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
-                },
-                yAxis:{},
-                series: [
-                    {
-                        name: "销量",
-                        type: "bar",
-                        data: [5, 20, 36, 10, 10, 20]
-                    }
-                ]
-            },
-            pie: {
-                color:["#20a0ff","#13CE66","#F7BA2A","#FF4949","#61a0a8"],
-                title : {
-                    text: '饼状图',
-                    x:'center'
-                },
-                tooltip : {
-                    trigger: 'item',
-                    formatter: "{a} <br/>{b} : {c} ({d}%)"
-                },
-                legend: {
-                    orient: 'vertical',
-                    left: 'left',
-                    data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋"]
-                },
-                series : [
-                    {
-                        name: '销量',
-                        type: 'pie',
-                        radius : '55%',
-                        center: ['50%', '50%'],
-                        data:[
-                            {value:335, name:'衬衫'},
-                            {value:310, name:'羊毛衫'},
-                            {value:234, name:'雪纺衫'},
-                            {value:135, name:'裤子'},
-                            {value:548, name:'高跟鞋'}
-                        ],
-                        itemStyle: {
-                            emphasis: {
-                                shadowBlur: 10,
-                                shadowOffsetX: 0,
-                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    return {
+                        coords: points,
+                        lineStyle: {
+                            normal: {
+                                color: (vm.$echarts).color.modifyHSL('#5A94DF', Math.round(hStep * idx))
                             }
                         }
-                    }
-                ]
-            },
-            pie_radius:{
-                color:["#20a0ff","#13CE66","#F7BA2A","#FF4949","#61a0a8"],
-                title : {
-                    text: '环形图',
-                    x:'center'
-                },
-                tooltip : {
-                    trigger: 'item',
-                    formatter: "{a} <br/>{b} : {c} ({d}%)"
-                },
-                legend: {
-                    orient: 'vertical',
-                    left: 'left',
-                    data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋"]
-                },
-                series : [
-                    {
-                        name: '销量',
-                        type: 'pie',
-                        radius : ['40%','60%'],
-                        data:[
-                            {value:335, name:'衬衫'},
-                            {value:310, name:'羊毛衫'},
-                            {value:234, name:'雪纺衫'},
-                            {value:135, name:'裤子'},
-                            {value:548, name:'高跟鞋'}
-                        ],
-                        itemStyle: {
-                            emphasis: {
-                                shadowBlur: 10,
-                                shadowOffsetX: 0,
-                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    };
+                }));
+                myChart.setOption({
+                    bmap: {
+                        center: [116.46, 39.92],
+                        zoom: 10,
+                        roam: true,
+                        mapStyle: {
+                          'styleJson': [
+                            {
+                              'featureType': 'water',
+                              'elementType': 'all',
+                              'stylers': {
+                                'color': '#031628'
+                              }
+                            },
+                            {
+                              'featureType': 'land',
+                              'elementType': 'geometry',
+                              'stylers': {
+                                'color': '#000102'
+                              }
+                            },
+                            {
+                              'featureType': 'highway',
+                              'elementType': 'all',
+                              'stylers': {
+                                'visibility': 'off'
+                              }
+                            },
+                            {
+                              'featureType': 'arterial',
+                              'elementType': 'geometry.fill',
+                              'stylers': {
+                                'color': '#000000'
+                              }
+                            },
+                            {
+                              'featureType': 'arterial',
+                              'elementType': 'geometry.stroke',
+                              'stylers': {
+                                'color': '#0b3d51'
+                              }
+                            },
+                            {
+                              'featureType': 'local',
+                              'elementType': 'geometry',
+                              'stylers': {
+                                'color': '#000000'
+                              }
+                            },
+                            {
+                              'featureType': 'railway',
+                              'elementType': 'geometry.fill',
+                              'stylers': {
+                                'color': '#000000'
+                              }
+                            },
+                            {
+                              'featureType': 'railway',
+                              'elementType': 'geometry.stroke',
+                              'stylers': {
+                                'color': '#08304b'
+                              }
+                            },
+                            {
+                              'featureType': 'subway',
+                              'elementType': 'geometry',
+                              'stylers': {
+                                'lightness': -70
+                              }
+                            },
+                            {
+                              'featureType': 'building',
+                              'elementType': 'geometry.fill',
+                              'stylers': {
+                                'color': '#000000'
+                              }
+                            },
+                            {
+                              'featureType': 'all',
+                              'elementType': 'labels.text.fill',
+                              'stylers': {
+                                'color': '#857f7f'
+                              }
+                            },
+                            {
+                              'featureType': 'all',
+                              'elementType': 'labels.text.stroke',
+                              'stylers': {
+                                'color': '#000000'
+                              }
+                            },
+                            {
+                              'featureType': 'building',
+                              'elementType': 'geometry',
+                              'stylers': {
+                                'color': '#022338'
+                              }
+                            },
+                            {
+                              'featureType': 'green',
+                              'elementType': 'geometry',
+                              'stylers': {
+                                'color': '#062032'
+                              }
+                            },
+                            {
+                              'featureType': 'boundary',
+                              'elementType': 'all',
+                              'stylers': {
+                                'color': '#465b6c'
+                              }
+                            },
+                            {
+                              'featureType': 'manmade',
+                              'elementType': 'all',
+                              'stylers': {
+                                'color': '#022338'
+                              }
+                            },
+                            {
+                              'featureType': 'label',
+                              'elementType': 'all',
+                              'stylers': {
+                                'visibility': 'off'
+                              }
                             }
+                          ]
                         }
-                    }
-                ]
-            }
-        })
+                    },
+                    series: [{
+                        type: 'lines',
+                        coordinateSystem: 'bmap',
+                        polyline: true,
+                        data: busLines,
+                        silent: true,
+                        lineStyle: {
+                            normal: {
+                                // color: '#c23531',
+                                // color: 'rgb(200, 35, 45)',
+                                opacity: 0.2,
+                                width: 1
+                            }
+                        },
+                        progressiveThreshold: 500,
+                        progressive: 200
+                    }, {
+                        type: 'lines',
+                        coordinateSystem: 'bmap',
+                        polyline: true,
+                        data: busLines,
+                        lineStyle: {
+                            normal: {
+                                width: 0
+                            }
+                        },
+                        effect: {
+                            constantSpeed: 20,
+                            show: true,
+                            trailLength: 0.1,
+                            symbolSize: 1.5
+                        },
+                        zlevel: 1
+                    }]
+                });
+            });
+        }
     }
 </script>
 
 <style scoped>
-    .echarts {
+    #main {
         float: left;
-        width: 500px;
-        height: 400px;
+        width: 1000px;
+        height: 500px;
     }
 </style>
