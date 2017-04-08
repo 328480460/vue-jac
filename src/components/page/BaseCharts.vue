@@ -11,7 +11,7 @@
 
 <script>
 
-    import bmap from'echarts/extension/bmap/bmap';
+    
     export default {
         mounted() {
             var vm = this;

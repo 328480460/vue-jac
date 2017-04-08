@@ -23,7 +23,7 @@
         mounted() {
             var myChart = this.$echarts.init(document.getElementById('main'));
             this.$ajax.get('api/chinaMap').then((res) => {
-                // 将map注册到echa中
+                // 将map注册到echars中
                 this.$echarts.registerMap('china', res.data.chinaMap);
                 myChart.setOption({
                     title: {
