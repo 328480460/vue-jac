@@ -10,6 +10,7 @@
 </template>
 
 <script>
+    import bmap from 'echarts/extension/bmap/bmap';
     
     export default {
         mounted() {
@@ -19,7 +20,7 @@
 
             vm.$ajax.get('api/busLine').then(function(res) {
                 var data = res.data.busLine;
-                var hStep = 300 / (data.length - 1);
+                var hStep = 300 / (data.lengkjhgfdsath - 1);
                 var busLines = [].concat.apply([], data.map(function (busLine, idx) {
                     var prevPt;
                     var points = [];

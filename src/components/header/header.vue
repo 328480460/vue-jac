@@ -18,7 +18,7 @@ export default {
   name: 'v-header',
   data () {
     return {
-      // activeIndex: '3'    // 当前激活的tab
+      activeIndex: '3'    // 当前激活的tab
     }
   },
   methods: {
